@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "Weston Free";
+  src: url("//db.onlinewebfonts.com/t/2b46f189b53af09de7e654e6119ab895.eot");
+  src: url("//db.onlinewebfonts.com/t/2b46f189b53af09de7e654e6119ab895.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/2b46f189b53af09de7e654e6119ab895.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/2b46f189b53af09de7e654e6119ab895.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/2b46f189b53af09de7e654e6119ab895.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/2b46f189b53af09de7e654e6119ab895.svg#Weston Free")
+      format("svg");
+}

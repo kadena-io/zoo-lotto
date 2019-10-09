@@ -1,0 +1,231 @@
+(begin-tx)
+
+;(env-data { "sender00": ["sender00-key"], "lotto-bank": ["lotto-key"], "lotto-operation" : ["lotto-key"], "player-one": ["p1-keys"], "player-two": ["p2-keys"], "p3": ["p3-keys"]})
+;(env-keys ["lotto-key", "p1-keys", "p2-keys", "p3-keys", "sender00-key"])
+
+(env-data { "k1" : ["keys1"], "k2": ["keys2"], "lotto-bank": ["lotto-key"],"lotto-operation" : ["lotto-key2"], "k3": ["keys3"], "zookeeper" : ["zookeeper-key"], "player-one": ["p1-keys"], "player-two": ["p2-keys"], "p3": ["p3-keys"], "k4": ["keys4"], "k5": ["keys5"], "k6": ["keys6"], "k7": ["keys7"]})
+(env-keys ["keys1", "keys2", "keys3", "zookeeper-key", "p1-keys", "p2-keys", "p3-keys", "lotto-key", "lotto-key2", "keys3", "keys4", "keys5", "keys6", "keys7"])
+(define-keyset 'k1 (read-keyset "k1"))
+(define-keyset 'k2 (read-keyset "k2"))
+(define-keyset 'k3 (read-keyset "k3"))
+(define-keyset 'k4 (read-keyset "k4"))
+(define-keyset 'k5 (read-keyset "k5"))
+(define-keyset 'k6 (read-keyset "k6"))
+(define-keyset 'k7 (read-keyset "k7"))
+(define-keyset 'lotto-operation (read-keyset "lotto-operation"))
+
+
+
+;important for our randomness...
+(env-chain-data {
+  "chain-id": "1",
+  "block-height": 20,
+  "prev-block-hash": "dhjaksddddddsjkshfdasasasassjkhdhaskjddhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdasdhjaksddddddsjkshfdas"}
+  )
+
+(commit-tx)
+
+
+(begin-tx)
+(load "../coin-contract/coin.pact")
+(use coin)
+
+(test-capability (COINBASE))
+(coinbase 'k1 (read-keyset 'k1) 5000000.0)
+(coinbase 'k2 (read-keyset 'k2) 5000000.0)
+(coinbase 'k3 (read-keyset 'k3) 5000000.0)
+(coinbase 'k4 (read-keyset 'k4) 5000000.0)
+(coinbase 'k5 (read-keyset 'k5) 5000000.0)
+(coinbase 'k6 (read-keyset 'k6) 5000000.0)
+(coinbase 'k7 (read-keyset 'k7) 5000000.0)
+(coinbase "lotto-operation" (read-keyset "lotto-operation") 500000000000.0)
+(transfer-and-create "lotto-operation" "lotto-bank" (read-keyset "lotto-bank") 40000000000.0)
+
+
+;(load "animal-lottery-final.pact")
+(load "zoo-lotto.pact")
+
+(use zoo-lotto)
+
+
+
+(init-game "thursday" 2.0)
+
+;(bet-number "9244" "thursday" "k1" 1.0)
+
+
+
+;(bet-number "966" "thursday" "k2" 1.0)
+
+;(bet-animal  "thursday" "k1" 5.0)
+
+;(bet-animal [["43" "02" "03" "04"] ["05" "66" "07" "08"] ["53" "94" "55" "56"] ["44" "45" "93" "47"] ["75" "92" "77" "78"]] "thursday" "k1" 1.0)
+;(bet-animal [ ["44", "45", "46", "47"]
+; , ["76", "77", "78", "79"]
+; , ["80", "81", "82", "83"] ] "thursday" "k1" 5.0)
+;(bet-animal [["04", "05", "06", "07"]]  "thursday" "k1" 2.0)
+; (bet-animal [["00", "01", "02", "03"]] "thursday" "k1" 2.0)
+; (bet-animal [["08", "09", "10", "11"]] "thursday" "k1" 2.0)
+; (bet-animal [["12", "13", "14", "15"]] "thursday" "k1" 2.0)
+; (bet-animal [["16", "17", "18", "19"]] "thursday" "k1" 2.0)
+; (bet-animal [["20", "21", "22", "23"]] "thursday" "k1" 2.0)
+; (bet-animal [["24", "25", "26", "27"]] "thursday" "k1" 2.0)
+; (bet-animal [["28", "29", "30", "31"]] "thursday" "k1" 2.0)
+; (bet-animal [["32", "33", "34", "35"]] "thursday" "k1" 2.0)
+; (bet-animal [["36", "37", "38", "39"]] "thursday" "k1" 2.0)
+; (bet-animal [["40", "41", "42", "43"]] "thursday" "k1" 2.0)
+; (bet-animal [["44", "45", "46", "47"]] "thursday" "k1" 2.0)
+; (bet-animal [["48", "49", "50", "51"]] "thursday" "k1" 2.0)
+; (bet-animal [["52", "53", "54", "55"]] "thursday" "k1" 2.0)
+; (bet-animal [["56", "57", "58", "59"]] "thursday" "k1" 2.0)
+; (bet-animal [["60", "61", "62", "63"]] "thursday" "k1" 2.0)
+; (bet-animal [["64", "65", "66", "67"]] "thursday" "k1" 2.0)
+; (bet-animal [["68", "69", "70", "71"]] "thursday" "k1" 2.0)
+; (bet-animal [["72", "73", "74", "75"]] "thursday" "k1" 2.0)
+; (bet-animal [["76", "77", "78", "79"]] "thursday" "k1" 2.0)
+; (bet-animal [["80", "81", "82", "83"]] "thursday" "k1" 2.0)
+; (bet-animal [["84", "85", "86", "87"]] "thursday" "k1" 2.0)
+; (bet-animal [["88", "89", "90", "91"]] "thursday" "k1" 2.0)
+; (bet-animal [["92", "93", "94", "95"]] "thursday" "k1" 2.0)
+; (bet-animal [["96", "97", "98", "99"]] "thursday" "k1" 2.0)
+;(bet-animal [ ["32", "33", "34", "35"]
+; , ["36", "37", "38", "39"]
+; , ["24", "25", "26", "27"]
+; , ["28", "29", "30", "31"] ] "thursday" "k2" 30.0)
+; (bet-animal [ ["16", "17", "18", "19"]
+; , ["32", "33", "34", "35"]
+; , ["52", "53", "54", "55"]
+; , ["92", "93", "94", "95"] ] "thursday" "k3" 100.0)
+
+
+
+;(bet-animal  "thursday" "k2" 30.0)
+;(bet-animal  "thursday" "k2" 30.0)
+
+
+(bet-number "00" "thursday" "k1" 1.0)
+(bet-number "01" "thursday" "k1" 1.0)
+(bet-number "02" "thursday" "k1" 1.0)
+(bet-number "03" "thursday" "k1" 1.0)
+(bet-number "04" "thursday" "k1" 1.0)
+(bet-number "05" "thursday" "k1" 1.0)
+(bet-number "06" "thursday" "k1" 1.0)
+(bet-number "07" "thursday" "k1" 1.0)
+(bet-number "08" "thursday" "k1" 1.0)
+(bet-number "09" "thursday" "k1" 1.0)
+(bet-number "10" "thursday" "k1" 1.0)
+(bet-number "11" "thursday" "k1" 1.0)
+(bet-number "12" "thursday" "k1" 1.0)
+(bet-number "13" "thursday" "k1" 1.0)
+(bet-number "14" "thursday" "k1" 1.0)
+(bet-number "15" "thursday" "k1" 1.0)
+(bet-number "16" "thursday" "k1" 1.0)
+(bet-number "17" "thursday" "k1" 1.0)
+(bet-number "18" "thursday" "k1" 1.0)
+(bet-number "19" "thursday" "k1" 1.0)
+(bet-number "20" "thursday" "k1" 1.0)
+(bet-number "21" "thursday" "k1" 1.0)
+(bet-number "22" "thursday" "k1" 1.0)
+(bet-number "23" "thursday" "k1" 1.0)
+(bet-number "24" "thursday" "k1" 1.0)
+(bet-number "25" "thursday" "k1" 1.0)
+(bet-number "26" "thursday" "k1" 1.0)
+(bet-number "27" "thursday" "k1" 1.0)
+(bet-number "28" "thursday" "k1" 1.0)
+(bet-number "29" "thursday" "k1" 1.0)
+(bet-number "30" "thursday" "k1" 1.0)
+(bet-number "31" "thursday" "k1" 1.0)
+(bet-number "32" "thursday" "k1" 1.0)
+(bet-number "33" "thursday" "k1" 1.0)
+(bet-number "34" "thursday" "k1" 1.0)
+(bet-number "36" "thursday" "k1" 1.0)
+(bet-number "37" "thursday" "k1" 1.0)
+(bet-number "38" "thursday" "k1" 1.0)
+(bet-number "39" "thursday" "k1" 1.0)
+(bet-number "40" "thursday" "k1" 1.0)
+(bet-number "41" "thursday" "k1" 1.0)
+(bet-number "42" "thursday" "k1" 1.0)
+(bet-number "43" "thursday" "k1" 1.0)
+(bet-number "44" "thursday" "k1" 1.0)
+(bet-number "45" "thursday" "k1" 1.0)
+(bet-number "46" "thursday" "k1" 1.0)
+(bet-number "47" "thursday" "k1" 1.0)
+(bet-number "48" "thursday" "k1" 1.0)
+(bet-number "49" "thursday" "k1" 1.0)
+(bet-number "50" "thursday" "k1" 1.0)
+(bet-number "51" "thursday" "k1" 1.0)
+(bet-number "52" "thursday" "k1" 1.0)
+(bet-number "53" "thursday" "k1" 1.0)
+(bet-number "54" "thursday" "k1" 1.0)
+(bet-number "55" "thursday" "k1" 1.0)
+(bet-number "56" "thursday" "k1" 1.0)
+(bet-number "57" "thursday" "k1" 1.0)
+(bet-number "58" "thursday" "k1" 1.0)
+(bet-number "59" "thursday" "k1" 1.0)
+(bet-number "60" "thursday" "k1" 1.0)
+(bet-number "61" "thursday" "k1" 1.0)
+(bet-number "62" "thursday" "k1" 1.0)
+(bet-number "63" "thursday" "k1" 1.0)
+(bet-number "64" "thursday" "k1" 1.0)
+(bet-number "65" "thursday" "k1" 1.0)
+(bet-number "66" "thursday" "k1" 1.0)
+(bet-number "67" "thursday" "k1" 1.0)
+(bet-number "68" "thursday" "k1" 1.0)
+(bet-number "69" "thursday" "k1" 1.0)
+(bet-number "70" "thursday" "k1" 1.0)
+(bet-number "71" "thursday" "k1" 1.0)
+(bet-number "72" "thursday" "k1" 1.0)
+(bet-number "73" "thursday" "k1" 1.0)
+(bet-number "74" "thursday" "k1" 1.0)
+(bet-number "75" "thursday" "k1" 1.0)
+(bet-number "76" "thursday" "k1" 1.0)
+(bet-number "77" "thursday" "k1" 1.0)
+(bet-number "78" "thursday" "k1" 1.0)
+(bet-number "79" "thursday" "k1" 1.0)
+(bet-number "80" "thursday" "k1" 1.0)
+(bet-number "81" "thursday" "k1" 1.0)
+(bet-number "82" "thursday" "k1" 1.0)
+(bet-number "83" "thursday" "k1" 1.0)
+(bet-number "84" "thursday" "k1" 1.0)
+(bet-number "85" "thursday" "k1" 1.0)
+(bet-number "86" "thursday" "k1" 1.0)
+(bet-number "87" "thursday" "k1" 1.0)
+(bet-number "88" "thursday" "k1" 1.0)
+(bet-number "89" "thursday" "k1" 1.0)
+(bet-number "90" "thursday" "k1" 1.0)
+(bet-number "91" "thursday" "k1" 1.0)
+(bet-number "92" "thursday" "k1" 1.0)
+(bet-number "93" "thursday" "k1" 1.0)
+(bet-number "94" "thursday" "k1" 1.0)
+(bet-number "95" "thursday" "k1" 1.0)
+(bet-number "96" "thursday" "k1" 1.0)
+(bet-number "97" "thursday" "k1" 1.0)
+(bet-number "98" "thursday" "k1" 1.0)
+(bet-number "99" "thursday" "k1" 1.0)
+
+
+;trying to get other animal odds right...
+(bet-animal [["11", "12", "13", "16"] ["22", "01", "02", "03"] ["11", "21", "22", "23"]] "thursday" "k1" 1.0)
+
+
+
+(get-games-table "thursday")
+(get-player "k1")
+;(get-player "k2")
+
+(end-game "thursday")
+
+(get-history)
+
+(account-balance "lotto-bank")
+
+;(get-players)
+
+;(get-odds)
+
+(commit-tx)
+
+
+;[[[["01" "02" "03" "78"] ["01" "02" "03" "47"] ["01" "02" "03" "04"]]] 10.0]]
+
+;(find-pay-animal-big animal-draw 95.0 [1.0 12.0] game-id [[["01" "02" "03" "47"] ["01" "02" "03" "04"]] 10.0 "player-one"])
